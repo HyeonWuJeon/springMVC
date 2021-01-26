@@ -37,6 +37,12 @@
       <scope>provided</scope>
     </dependency>
 
+<!--    서블릿에서  IOC 컨테이너 기능 사용하기-->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>5.1.3.RELEASE</version>
+    </dependency>
   </dependencies>
 
 
