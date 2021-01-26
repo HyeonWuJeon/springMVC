@@ -5,33 +5,73 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 
-  <!-- 필터를 등록한다. -->
-  <filter>
-    <filter-name>MyFilter</filter-name>
-    <filter-class>me.hyeonwoo.MyFilter</filter-class>
-  </filter>
+  <!--  applicationContext 설정 : filter보다 먼저 설정해준다. -->
+  <context-param>
+    <param-name>contextClass</param-name>
+    <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+  </context-param>
 
-  <!--  특정 서블릿 혹은 특정 url 에 매핑을 설정한다. -->
-  <filter-mapping>
-    <filter-name>MyFilter</filter-name>
-    <servlet-name>helloServlet</servlet-name>
-  </filter-mapping>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>me.hyeonwoo.AppConfig</param-value>
+  </context-param>
+
+  <!-- 필터를 등록한다. -->
+<!--  <filter>-->
+<!--    <filter-name>MyFilter</filter-name>-->
+<!--    <filter-class>me.hyeonwoo.MyFilter</filter-class>-->
+<!--  </filter>-->
+
+
 
   <!--  리스너를 등록한다. -->
+<!--  <listener>-->
+<!--    <listener-class>me.hyeonwoo.MyListener</listener-class>-->
+<!--  </listener>-->
+
+<!--  스프링이 제공해주는 리스너를 등록한다. -->
+<!--  스프링IOC 컨테이너(애플리케이션 컨텍스트)를 서블릿 어플리케이션의 생명주기에 맞춰서 바인딩을 해준다. -->
   <listener>
-    <listener-class>me.hyeonwoo.MyListener</listener-class>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
-  <!--  서블릿을 등록한다. -->
+
+
+<!--  &lt;!&ndash;  특정 서블릿 혹은 특정 url 에 매핑을 설정한다. &ndash;&gt;-->
+<!--  <filter-mapping>-->
+<!--    <filter-name>MyFilter</filter-name>-->
+<!--    <servlet-name>helloServlet</servlet-name>-->
+<!--  </filter-mapping>-->
+
+<!--  &lt;!&ndash;  서블릿을 등록한다. &ndash;&gt;-->
+<!--  <servlet>-->
+<!--    <servlet-name>helloServlet</servlet-name>-->
+<!--    <servlet-class>me.hyeonwoo.HelloServlet</servlet-class>-->
+<!--  </servlet>-->
+
+<!--  &lt;!&ndash; url mapping : 서블릿 이름 , 매핑할 url&ndash;&gt;-->
+<!--  <servlet-mapping>-->
+<!--    <servlet-name>helloServlet</servlet-name>-->
+<!--    <url-pattern>/hello</url-pattern>-->
+<!--  </servlet-mapping>-->
+
+<!--  DispatcherServlet front controller -->
   <servlet>
-    <servlet-name>helloServlet</servlet-name>
-    <servlet-class>me.hyeonwoo.HelloServlet</servlet-class>
+    <servlet-name>app</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextClass</param-name>
+      <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+    </init-param>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>me.hyeonwoo.WebConfig</param-value>
+    </init-param>
   </servlet>
 
-  <!-- url mapping : 서블릿 이름 , 매핑할 url-->
+<!--  app 밑의 모든요청이 Dispatcher servlet로 들어온다. front controller-->
   <servlet-mapping>
-    <servlet-name>helloServlet</servlet-name>
-    <url-pattern>/hello</url-pattern>
+    <servlet-name>app</servlet-name>
+    <url-pattern>/app/*</url-pattern>
   </servlet-mapping>
-
 
 </web-app>
